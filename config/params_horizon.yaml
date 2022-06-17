@@ -1,0 +1,66 @@
+lio_sam:
+
+  # Dynamic Removal
+  dynamicRemoveMode: 2                       # 0 do not perfrom dynamic points removal, 1 remove by semantic images, 2 remove by lidar det
+  bboxremovalflag: false
+
+  # GPS Settings
+  useImuHeadingInitialization: false          # if using GPS data, set to "true"
+  useGpsElevation: true                      # if GPS elevation is bad, set to "false"
+  gpsCovThreshold: 2.0                        # m^2, threshold for using GPS data default 2.0
+  poseCovThreshold: 5.0                      # m^2, threshold for using GPS data default 25.0
+  
+  # Sensor Settings
+  N_SCAN: 128                                 # number of lidar channel (i.e., 16, 32, 64, 128)
+  Horizon_SCAN: 1800                          # lidar horizontal resolution (Velodyne:1800, Ouster:512,1024,2048)
+  downsampleRate: 1                           # default: 1. Downsample your data if too many points. i.e., 16 = 64 / 4, 16 = 16 / 1
+  lidarMinRange: 3.0                          # default: 3.0, minimum lidar range to be used
+  lidarMaxRange: 200.0                        # default: 200.0, maximum lidar range to be used
+  lidarMinZ: -4.0                             # default: -5.0, minium lidar z value to be used
+  boxSizeDilate: 1.2                          # default: 1.0, dilation scale of bbox size for dynamic points removal
+
+  mapLidarMinRange: 3.0
+  mapLidarMaxRange: 50.0
+  mapLidarMinZ: -4.0
+
+
+  # IMU Settings
+  imuAccNoise: 3.9939570888238808e-03
+  imuGyrNoise: 1.5636343949698187e-03
+  imuAccBiasN: 6.4356659353532566e-05
+  imuGyrBiasN: 3.5640318696367613e-05
+  imuGravity: 9.80511
+
+  # LOAM feature threshold
+  edgeThreshold: 1.0  # smaller results to more edge point default 1.0
+  surfThreshold: 0.1  # larger results to more surf points: default 0.1
+  edgeFeatureMinValidNum: 10
+  surfFeatureMinValidNum: 100
+
+  # voxel filter paprams
+  odometrySurfLeafSize: 0.4                     # default: 0.4 - outdoor, 0.2 - indoor
+  mappingCornerLeafSize: 0.2                    # default: 0.2 - outdoor, 0.1 - indoor
+  mappingSurfLeafSize: 0.4                      # default: 0.4 - outdoor, 0.2 - indoor
+
+  # robot motion constraint (in case you are using a 2D robot)
+  z_tollerance: 1000                            # meters
+  rotation_tollerance: 1000                     # radians
+
+  # CPU Params
+  numberOfCores: 8                              # number of cores for mapping optimization
+  mappingProcessInterval: 0.05                  # seconds, regulate mapping frequency
+
+  # Surrounding map
+  surroundingkeyframeAddingDistThreshold: 1.0   # meters, regulate keyframe adding threshold: default 1.0
+  surroundingkeyframeAddingAngleThreshold: 0.1  # radians, regulate keyframe adding threshold: default 0.2
+  surroundingKeyframeDensity: 2.0               # meters, downsample surrounding keyframe poses   
+  surroundingKeyframeSearchRadius: 50.0         # meters, within n meters scan-to-map optimization (when loop closure disabled)
+
+  # Loop closure
+  loopClosureEnableFlag: false
+  surroundingKeyframeSize: 25                   # submap size (when loop closure enabled)
+  historyKeyframeSearchRadius: 30.0             # meters, key frame that is within n meters from current pose will be considerd for loop closure
+  historyKeyframeSearchTimeDiff: 30.0           # seconds, key frame that is n seconds older will be considered for loop closure, default:30
+  historyKeyframeSearchNum: 25                 # number of hostory key frames will be fused into a submap for loop closure
+  historyKeyframeFitnessScore: 5.0              # icp threshold, the smaller the better alignment
+  staticEgoMotionThreshold: 0.05                # meters, if ego motion between frames is lower than this, considered static
